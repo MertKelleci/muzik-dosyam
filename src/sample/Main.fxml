@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.collections.FXCollections?>
+<BorderPane fx:id="mainBorderPane" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Controller" prefHeight="600" prefWidth="800">
+    <center>
+      <TabPane>
+          <tabs>
+              <Tab text="Sanatçı">
+                  <content>
+                      <TableView fx:id="artistTable">
+                          <columns>
+                              <TableColumn text="İsim" prefWidth="200">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="Ad"/>
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn text="Ülke" prefWidth="200">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="Ulke" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                          </columns>
+                      </TableView>
+                  </content>
+              </Tab>
+              <Tab text="Album">
+                  <TableView fx:id="albumTable">
+                      <columns>
+                          <TableColumn text="Albüm Adı" prefWidth="200">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Ad"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Şarkı Adeti" prefWidth="100">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Sarki_Adet"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Çıkış Yılı" prefWidth="100">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Tarih"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Türü" prefWidth="200">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Tur"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                      </columns>
+                  </TableView>
+              </Tab>
+              <Tab text="Şarkı">
+                  <TableView fx:id="songTable">
+                      <columns>
+                          <TableColumn text="Şarkı Adı" prefWidth="200">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="Ad"/>
+                            </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Süresi" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="Sure"/>
+                            </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Türü" prefWidth="100">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Tur"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Dinlenme" prefWidth="100">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Dinlenme"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                          <TableColumn text="Tarihi" prefWidth="100">
+                              <cellValueFactory>
+                                  <PropertyValueFactory property="Tarih"/>
+                              </cellValueFactory>
+                          </TableColumn>
+                      </columns>
+                  </TableView>
+              </Tab>
+          </tabs>
+      </TabPane>
+    </center>
+
+    <right>
+        <VBox alignment="CENTER" prefWidth="150" spacing="10">
+            <padding>
+                <Insets right="10" left="10"/>
+            </padding>
+            <Button wrapText="true" text="Seçilen Sanatçının Albümlerini Sırala" onMouseClicked="#listAlbumsForArtist"/>
+            <Button wrapText="true" text="Seçilen Albümdeki Şarkıları Sırala" onMouseClicked="#listSongsForAlbum"/>
+            <Button wrapText="true" text="Seçilen Şarkıyı Dinle" onMouseClicked="#updateSongView"/>
+        </VBox>
+    </right>
+
+    <bottom>
+        <TabPane fx:id="tabPane" prefHeight="200">
+            <tabs>
+                <Tab text="Sanatçı Ekle/Çıkar" >
+                    <ScrollPane>
+                        <GridPane vgap="10" hgap="10">
+                            <padding>
+                                <Insets left="10" top="20" bottom="20"/>
+                            </padding>
+                            <Label text="Sanatçı EKLE" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label text="Sanatçı İsmi" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <TextField fx:id="nan" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label text="Sanatçı Ülkesi" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <TextField fx:id="nac" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            <Button text="Tamam" onMouseClicked="#newArtist" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <Label fx:id="info1" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+
+                            <Label text="Sanatçı ÇIKAR" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+                            <Label text="Sanatçı İsmi" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+                            <TextField fx:id="dan" GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+                            <Button text="Tamam" onMouseClicked="#deleteArtist" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
+                            <Label fx:id="info2" GridPane.rowIndex="3" GridPane.columnIndex="5" GridPane.columnSpan="2"/>
+                        </GridPane>
+                    </ScrollPane>
+                </Tab>
+                <Tab text="Albüm Ekle/Çıkar">
+                    <ScrollPane>
+                        <GridPane vgap="10" hgap="10">
+                            <padding>
+                                <Insets left="10" top="20" bottom="20"/>
+                            </padding>
+                            <Label text="Albüm EKLE" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <Label text="Albüm Adı" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="aiName" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label text="Sanatçı Adı" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="aiAName" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            <Label text="Çıkış Tarihi" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <TextField fx:id="aiDate" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                            <Label text="Türü" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="aiTur" GridPane.rowIndex="4" GridPane.columnIndex="1">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Pop"/>
+                                        <String fx:value="Jazz"/>
+                                        <String fx:value="Classical"/>
+                                    </FXCollections>
+                                </items>
+                                <value>
+                                    <String fx:value="Pop"/>
+                                </value>
+                            </ComboBox>
+                            <Button text="Tamam" onMouseClicked="#newAlbum" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                            <Label fx:id="aiInfo" GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+
+                            <Label text="Albüm SİL" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                            <Label text="Albüm Adı" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+                            <TextField fx:id="adName" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+                            <Button text="Tamam" onMouseClicked="#deleteAlbum" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+                            <Label fx:id="adInfo" GridPane.rowIndex="3" GridPane.columnIndex="4" GridPane.columnSpan="2"/>
+                        </GridPane>
+                    </ScrollPane>
+                </Tab>
+                <Tab text="Şarkı Ekle/Çıkar">
+                    <ScrollPane>
+                        <GridPane vgap="10" hgap="10">
+                            <padding>
+                                <Insets left="10" top="20" bottom="20"/>
+                            </padding>
+                            <Label text="Şarkı EKLE" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                            <Label text="Şarkı Adı" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                            <TextField fx:id="siName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                            <Label text="Album Adı" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                            <TextField fx:id="siAName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            <Label text="Tarihi" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                            <TextField fx:id="siTarih" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                            <Label text="Türü" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                            <ComboBox fx:id="siTur" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Pop"/>
+                                        <String fx:value="Jazz"/>
+                                        <String fx:value="Classical"/>
+                                    </FXCollections>
+                                </items>
+                                <value>
+                                    <String fx:value="Pop"/>
+                                </value>
+                            </ComboBox>
+                            <Label text="Süre" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                            <TextField fx:id="siSure" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                            <Button text="Tamam" onMouseClicked="#newSong" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                            <Label fx:id="siInfo" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2"/>
+
+
+                            <Label text="Şarkı SİL" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                            <Label text="Şarkı Adı" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                            <TextField fx:id="sdName" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                            <Button text="Tamam" onMouseClicked="#deleteSong" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                            <Label fx:id="sdInfo" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.columnSpan="2" />
+                        </GridPane>
+                    </ScrollPane>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </bottom>
+</BorderPane>
